@@ -1,65 +1,79 @@
-# Laraerp
 
-[![MIT license](https://poser.pugx.org/jansenfelipe/nfephp-serialize/license.svg)](http://opensource.org/licenses/MIT)
+# Setup Docker Para Projetos Laravel
+[Assine a Academy, e Seja VIP!](https://academy.especializati.com.br)
 
-Laraerp é uma aplicação web escrita sob o [Laravel Framework PHP](http://laravel.com).
-
-# Instalação
-
-Inicie uma aplicação Laraerp no [Heroku](https://www.heroku.com/) ou instale na sua máquina utilizando o [Composer](https://getcomposer.org/):
-
-### Heroku
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/laraerp/laraerp/tree/develop)
-
-### Composer
-
-```shell
-$ composer create-project laraerp/laraerp -s dev
+### Passo a passo
+Clone Repositório
+```sh
+git clone https://github.com/especializati/setup-docker-laravel.git my-project
+cd my-project/
 ```
 
-Acesse o diretório `laraerp` e configure as variáveis do banco de dados no arquivo `.env`. Feito isso, execute os comandos para criar e popular as tabelas:
 
-```shell
-$ php artisan migrate
-$ php artisan db:seed --class="LaraerpSeeder"
+Alterne para a branch laravel 8.x
+```sh
+git checkout laravel-8
 ```
 
-Você pode utilizar o [PHP Built-in web server](http://php.net/manual/en/features.commandline.webserver.php) para executar a aplicação:
 
-```shell
-$ php artisan serve
+Remova o versionamento
+```sh
+rm -rf .git/
 ```
 
-Por padrão, a aplicação irá executar na porta 8000
 
-[http://localhost:8000](http://localhost:8000)
+Crie o Arquivo .env
+```sh
+cd example-project/
+cp .env.example .env
+```
 
-# Primeiro acesso
 
-    Usuario: admin@admin.com
-    Senha: admin
+Atualize as variáveis de ambiente do arquivo .env
+```dosini
+APP_NAME=EspecializaTi
+APP_URL=http://localhost:8180
 
-# License
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=nome_que_desejar_db
+DB_USERNAME=root
+DB_PASSWORD=root
 
-The MIT License (MIT)
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
 
-Copyright (c) 2015 Jansen Felipe
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+Suba os containers do projeto
+```sh
+docker-compose up -d
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+
+Acessar o container
+```sh
+docker-compose exec laravel_8 bash
+```
+
+
+Instalar as dependências do projeto
+```sh
+composer install
+```
+
+
+Gerar a key do projeto Laravel
+```sh
+php artisan key:generate
+```
+
+
+Acesse o projeto
+[http://localhost:8180](http://localhost:8180)
